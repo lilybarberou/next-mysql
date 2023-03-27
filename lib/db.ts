@@ -8,11 +8,12 @@ const connection = mysql.createConnection({
     database: 'test'
 });
 
-export const sqlQuery = (sql: any): Promise<any> => {
+export const sqlQuery = (sql: string, fields?: any[]): Promise<any> => {
     return new Promise((resolve, reject) => {
-        console.log('>>>', sql);
+        const sqlQuery = mysql.format(sql, fields);
+        console.log('>>>', sqlQuery);
 
-        connection.query(sql, (err, result) => {
+        connection.query(sqlQuery, (err, result) => {
             if (err) reject(err.message);
             resolve(result);
         })   
