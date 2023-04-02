@@ -7,7 +7,7 @@ import { fetchApi } from '@lib/api';
 import { getFormData } from '@contexts/Utils';
 import { Button, Input, Select } from '@components/StyledComponents';
 
-export default function EditerUtilisateur() {
+export default function CreerUtilisateur() {
     const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
