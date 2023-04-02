@@ -21,6 +21,12 @@ export default function Navigation() {
         { cond: isAdmin, title: 'Ajouter un achat', path: '/achats/ajouter' },
     ];
 
+    const handleLogout = () => {
+        window.localStorage.removeItem('access_token');
+        window.localStorage.removeItem('user');
+        router.push('/connexion');
+    };
+
     if (router.pathname === '/connexion') return null;
     return (
         <S.Container>
@@ -32,6 +38,7 @@ export default function Navigation() {
                     </Link>
                 );
             })}
+            <S.Disconnect onClick={handleLogout}>Déconnexion</S.Disconnect>
         </S.Container>
     );
 }
@@ -52,4 +59,11 @@ S.Container = styled.div`
             color: ${({ theme }) => theme.primary};
         }
     }
+`;
+
+S.Disconnect = styled.span`
+    margin-left: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: ${({ theme }) => theme.primary};
 `;
