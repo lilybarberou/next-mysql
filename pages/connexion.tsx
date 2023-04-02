@@ -36,8 +36,8 @@ export default function Login() {
             </Head>
             <S.Form id="form" onSubmit={handleSubmit}>
                 <h1>Connexion</h1>
-                <Input defaultValue="lily.barberou@gmail.com" type="email" placeholder="Email" name="email" required={true} autoComplete="off" />
-                <Input defaultValue="a" type="password" placeholder="Mot de passe" name="password" required={true} autoComplete="off" />
+                <Input type="email" placeholder="Email" name="email" required={true} autoComplete="off" />
+                <Input type="password" placeholder="Mot de passe" name="password" required={true} autoComplete="off" />
                 <Button>Connexion</Button>
             </S.Form>
         </S.Container>
