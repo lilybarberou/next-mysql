@@ -2,26 +2,24 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { fetchApi } from '@lib/api';
-import { User } from '@lib/types';
+import { Purchase, User } from '@lib/types';
 
 export default function Home() {
-    const [users, setUsers] = useState([]);
-    const [purchases, setPurchases] = useState([]);
+    const [users, setUsers] = useState<User[]>([]);
+    const [purchases, setPurchases] = useState<Purchase[]>([]);
     const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
     useEffect(() => {
-        const getData = async () => {
-            const query = await fetchApi('users');
-            if (query.success) setUsers(query.data);
-        };
-
-        getData();
+        Promise.all([fetchApi('users'), fetchApi('purchases')]).then((values) => {
+            if (values[0].success) setUsers(values[0].data);
+            if (values[1].success) setPurchases(values[1].data);
+        });
     }, []);
 
     return (
         <S.Container>
             <Head>
-                <title>Home</title>
+                <title>Accueil</title>
             </Head>
             <h1>Accueil</h1>
             <S.Table>
@@ -35,14 +33,14 @@ export default function Home() {
                 </thead>
                 <tbody>
                     {users.map((user: User) => (
-                        <tr key={user.id}>
+                        <tr key={user.me_id}>
                             <td>
-                                {user.firstname} {user.name}
+                                {user.me_firstname} {user.me_name}
                             </td>
                         </tr>
                     ))}
                     {purchases.map((purchase) => (
-                        <tr key={purchase.id}>
+                        <tr key={purchase.pu_id}>
                             <td></td>
                         </tr>
                     ))}
