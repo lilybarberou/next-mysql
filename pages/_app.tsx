@@ -4,16 +4,18 @@ import { ToastContainer } from 'react-toastify';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import RequireAuth from '@components/RequireAuth';
 import 'react-toastify/dist/ReactToastify.css';
+import Navigation from '@components/Navigations';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <RequireAuth>
             <ThemeProvider theme={globalTheme}>
                 <GlobalStyle />
-                <ToastContainer position='bottom-right' theme='dark' />
+                <ToastContainer position="bottom-right" theme="dark" />
                 <Head>
-                    <meta name='viewport' content='width=device-width, initial-scale=1' />
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
+                <Navigation />
                 <Component {...pageProps} />
             </ThemeProvider>
         </RequireAuth>
@@ -21,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const globalTheme = {
-    primary: '#3420be',
+    primary: '#2663de',
     primaryDark: '#2b1a97',
     background: '#1e1e1e',
     font: "'Poppins', sans-serif",
