@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'test'
+    database: process.env.DB_NAME
 });
 
 export const sqlQuery = (sql: string, fields?: any[]): Promise<any> => {

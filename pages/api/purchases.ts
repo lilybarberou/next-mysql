@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { sqlQuery } from '@lib/db';
 import { Purchase } from '@lib/types';
 
-const purchaseFields = ['id', 'amount', 'date'];
+const purchaseFields = ['pu_id', 'pu_amount', 'pu_date'];
 
 type Response = {
     success: boolean;

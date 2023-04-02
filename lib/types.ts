@@ -1,12 +1,13 @@
 export type User = {
-    id: number;
-    username: string;
-    firstname: string;
-    name: string;
-  }
+  me_id: number;
+  me_role: number;
+  me_email: string;
+  me_name: string;
+  me_firstname: string;
+}
 
 export type Purchase = {
-    id: number;
-    amount: number;
-    date: Date;
-  }
+  pu_id: number;
+  pu_amount: number;
+  pu_date: Date;
+}
