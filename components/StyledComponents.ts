@@ -27,3 +27,13 @@ export const Input  = styled.input`
         outline: none;
     }
 `
+
+export const Select = styled.select`
+    height: 35px;
+    padding: 0 10px;
+    font-family: ${({ theme }) => theme.font};
+
+    :focus {
+        outline: none;
+    }
+`
