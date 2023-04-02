@@ -94,6 +94,7 @@ S.Columns = styled.div`
 S.User = styled.div`
     display: grid;
     grid-template-columns: 250px 300px 70px;
+    margin-bottom: 7px;
 
     svg {
         cursor: pointer;
