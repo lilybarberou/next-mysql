@@ -8,6 +8,16 @@ export type User = {
 
 export type Purchase = {
   pu_id: number;
+  pu_label: string;
+  pu_member: number;
   pu_amount: number;
-  pu_date: Date;
+  pu_date: string;
+}
+
+export type Contribution = {
+  co_id: number;
+  co_bonus: number;
+  co_member: number;
+  co_amount: number;
+  co_date: string;
 }

@@ -26,7 +26,7 @@ export default function CreerCotisation() {
 
         if (data.co_member === '0') return toast('Veuillez choisir un membre', { type: 'error' });
 
-        const query = await fetchApi('cotisations', { method: 'POST', body: JSON.stringify(data) });
+        const query = await fetchApi('contributions', { method: 'POST', body: JSON.stringify(data) });
 
         if (query.success) router.push('/');
         else toast(query.message, { type: 'error' });
