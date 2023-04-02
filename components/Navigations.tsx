@@ -17,6 +17,8 @@ export default function Navigation() {
     const navLinks = [
         { title: 'Accueil', path: '/' },
         { cond: isAdmin, title: 'Utilisateurs', path: '/utilisateurs' },
+        { cond: isAdmin, title: 'Ajouter une cotisation', path: '/cotisations/ajouter' },
+        { cond: isAdmin, title: 'Ajouter un achat', path: '/achats/ajouter' },
     ];
 
     if (router.pathname === '/connexion') return null;
