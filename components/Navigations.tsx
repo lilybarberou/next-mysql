@@ -24,7 +24,7 @@ export default function Navigation() {
     const handleLogout = () => {
         window.localStorage.removeItem('access_token');
         window.localStorage.removeItem('user');
-        router.push('/connexion');
+        window.location.pathname = '/connexion';
     };
 
     if (router.pathname === '/connexion') return null;
