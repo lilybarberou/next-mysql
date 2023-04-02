@@ -72,6 +72,9 @@ S.Table = styled.table`
         text-align: left;
         padding: 8px;
     }
+    thead tr th:first-of-type {
+        border: none;
+    }
 `;
 
 S.Columns = styled.tr`
