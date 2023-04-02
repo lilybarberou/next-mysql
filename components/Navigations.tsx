@@ -41,7 +41,7 @@ S.Container = styled.div`
     padding-bottom: 5px;
     display: flex;
     gap: 20px;
-    border-bottom: 1px solid #919191;
+    border-bottom: 1px solid #575757;
 
     a {
         transition: 0.2s;
