@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { sqlQuery } from '@lib/db';
 import { User } from '@lib/types';
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 const userFields = ['me_id', 'me_role', 'me_email', 'me_firstname', 'me_name'];
 
@@ -26,9 +28,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
     else if (req.method === 'POST') {
       if (!req.body) res.status(401).json({success: false, message: 'Aucune donnée passée'});
-      
+      const body = JSON.parse(req.body);
+
+      const hash = bcrypt.hashSync(body.me_password, saltRounds);
+      body.me_password = hash;
+
       const sql = `INSERT INTO members SET ?`;  
-      const results = await sqlQuery(sql, [JSON.parse(req.body)]);
+      const results = await sqlQuery(sql, [body]);
       
       res.status(200).json({success: true, data: results});
     }

@@ -31,11 +31,13 @@ export default function CreerUtilisateur() {
                     <option value="1">Administrateur</option>
                     <option value="2">Utilisateur</option>
                 </Select>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="me_email">Email</label>
                 <Input type="email" placeholder="Email" name="me_email" required={true} autoComplete="off" />
-                <label htmlFor="firstname">Prénom</label>
+                <label htmlFor="me_password">Mot de passe</label>
+                <Input type="password" placeholder="Mot de passe" name="me_password" required={true} autoComplete="off" />
+                <label htmlFor="me_firstname">Prénom</label>
                 <Input placeholder="Prénom" name="me_firstname" required={true} autoComplete="off" />
-                <label htmlFor="name">Nom</label>
+                <label htmlFor="me_name">Nom</label>
                 <Input placeholder="Nom" name="me_name" required={true} autoComplete="off" />
                 <Button>Créer</Button>
             </S.Form>
