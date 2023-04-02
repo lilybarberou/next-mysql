@@ -4,3 +4,9 @@ export type User = {
     firstname: string;
     name: string;
   }
+
+export type Purchase = {
+    id: number;
+    amount: number;
+    date: Date;
+  }
