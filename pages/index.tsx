@@ -7,7 +7,7 @@ import { Contribution, Purchase, User } from '@lib/types';
 export default function Home() {
     const [users, setUsers] = useState<User[]>([]);
     const [contributions, setContributions] = useState<any>({});
-    const [fund, setFund] = useState();
+    const [fund, setFund] = useState(0);
     const months = ['Jan.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
     const currentYear = new Date().getFullYear();
 
@@ -61,7 +61,7 @@ export default function Home() {
                     ))}
                 </tbody>
             </S.Table>
-            {fund && <S.Fund>Montant dans la caisse : {fund}€</S.Fund>}
+            <S.Fund>Montant dans la caisse : {fund}€</S.Fund>
         </S.Container>
     );
 }
