@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { fetchApi } from '@lib/api';
-import { Contribution, Purchase, User } from '@lib/types';
+import { Contribution, User } from '@lib/types';
 
 export default function Home() {
     const [users, setUsers] = useState<User[]>([]);
     const [contributions, setContributions] = useState<any>({});
     const [fund, setFund] = useState(0);
-    const months = ['Jan.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
     const currentYear = new Date().getFullYear();
+    const [selectedYear, setSelectedYear] = useState(currentYear);
+    const [yearsList, setYearsList] = useState<number[]>([]);
+    const months = ['Jan.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
 
     useEffect(() => {
         Promise.all([fetchApi('users'), fetchApi('contributions'), fetchApi('fund')]).then((values) => {
@@ -22,6 +24,14 @@ export default function Home() {
                     obj[contribution.co_date][contribution.co_member] = contribution;
                 });
 
+                let list: number[] = [];
+                Object.keys(obj).forEach((key) => {
+                    const year = key.split('-')[0];
+                    if (!yearsList.includes(Number(year))) yearsList.push(Number(year));
+                });
+                list = yearsList.sort((a, b) => b - a);
+                setYearsList(list);
+
                 setContributions(obj);
             }
 
@@ -29,12 +39,24 @@ export default function Home() {
         });
     }, []);
 
+    const changeYear = (year: number) => {
+        setSelectedYear(year);
+    };
+
     return (
         <S.Container>
             <Head>
                 <title>Accueil</title>
             </Head>
             <h1>Accueil</h1>
+            <S.Years>
+                {yearsList.length > 0 &&
+                    yearsList.map((year) => (
+                        <span onClick={() => changeYear(year)} className={selectedYear === year ? 'active' : ''} key={year}>
+                            {year}
+                        </span>
+                    ))}
+            </S.Years>
             <S.Table>
                 <thead>
                     <S.Columns>
@@ -53,7 +75,7 @@ export default function Home() {
                             {months.map((month, index) => {
                                 let hasContribution = false;
                                 const i = index + 1;
-                                const date = `${currentYear}-${i.toString().padStart(2, '0')}`;
+                                const date = `${selectedYear}-${i.toString().padStart(2, '0')}`;
                                 if (contributions[date]?.hasOwnProperty(user.me_id)) hasContribution = true;
                                 return <S.Row valid={hasContribution} key={`${user.me_id}-${i}`}></S.Row>;
                             })}
@@ -71,8 +93,23 @@ S.Container = styled.div`
     margin: 20px;
 `;
 
+S.Years = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+
+    span {
+        cursor: pointer;
+        color: ${({ theme }) => theme.primary};
+
+        .active {
+            text-decoration: underline;
+        }
+    }
+`;
+
 S.Table = styled.table`
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 14px;
     display: flex;
     flex-direction: column;
