@@ -38,7 +38,9 @@ export default function Retards() {
                 <title>Retards</title>
             </Head>
             <h1>Retards</h1>
-            <h2>En {currentMonthLabel}</h2>
+            <h2>
+                En {currentMonthLabel} {currentYear}
+            </h2>
             <S.Columns>
                 <span>Nom</span>
                 <span>Email</span>
