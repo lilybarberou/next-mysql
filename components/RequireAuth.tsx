@@ -6,12 +6,20 @@ export default function RequireAuth(props: PropsWithChildren) {
     const { children } = props;
     const router = useRouter();
     const pageAllowed = ['/connexion'].includes(router.pathname);
+    const noAdminAllowed = ['/'].includes(router.pathname);
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const access_token = localStorage.getItem('access_token');
-        if (!access_token) router.push('/connexion');
+        const user: any = localStorage.getItem('user');
+        if (!access_token || !user) router.push('/connexion');
+
+        // check if admin, to access private pages
+        if (user) {
+            const parsedUser = JSON.parse(user);
+            if (parsedUser.me_role === 2 && !noAdminAllowed) router.push('/');
+        }
 
         const checkAuth = async () => {
             const query = await fetchApi('authenticate', { method: 'POST', body: access_token });
