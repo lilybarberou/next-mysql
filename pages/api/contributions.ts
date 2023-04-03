@@ -25,9 +25,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
     // GET USER
     else if (req.method === 'GET') {
-        if (req.query?.co_id) {
-            whereFields.stmt += 'co_id = ?';
-            whereFields.values.push(req.query.co_id);
+        if (req.query?.co_date) {
+            whereFields.stmt += 'WHERE co_date = ?';
+            whereFields.values.push(req.query.co_date);
         }
 
         const sql = `SELECT ${contributionsFields.join(', ')} FROM contributions ${whereFields.stmt}`;  
