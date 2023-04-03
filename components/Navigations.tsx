@@ -18,6 +18,7 @@ export default function Navigation() {
         { title: 'Accueil', path: '/' },
         { cond: isAdmin, title: 'Utilisateurs', path: '/utilisateurs' },
         { cond: isAdmin, title: 'Retards', path: '/retards' },
+        { cond: isAdmin, title: 'Gérer les montants', path: '/montants' },
         { cond: isAdmin, title: 'Ajouter une cotisation', path: '/cotisations/ajouter' },
         { cond: isAdmin, title: 'Ajouter un achat', path: '/achats/ajouter' },
     ];

@@ -21,3 +21,9 @@ export type Contribution = {
   co_amount: number;
   co_date: string;
 }
+
+export type Role = {
+  ro_id: number;
+  ro_label: string;
+  ro_amount: number;
+}
