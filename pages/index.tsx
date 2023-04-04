@@ -10,16 +10,19 @@ export default function Home() {
     const [fund, setFund] = useState(0);
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
-    const [yearsList, setYearsList] = useState<number[]>([]);
+    const [yearsList, setYearsList] = useState<number[]>([currentYear]);
     const months = ['Jan.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
 
     useEffect(() => {
-        Promise.all([fetchApi('users'), fetchApi('contributions'), fetchApi('fund')]).then((values) => {
-            if (values[0].success) setUsers(values[0].data);
-            if (values[1].success) {
+        let promisedArray = [fetchApi('contributions'), fetchApi('fund')];
+        const user = JSON.parse(localStorage.getItem('user') as string);
+        if (user.me_role === 1) promisedArray.push(fetchApi('users'));
+
+        Promise.all(promisedArray).then((values) => {
+            if (values[0].success) {
                 const obj: any = {};
 
-                values[1].data.forEach((contribution: Contribution) => {
+                values[0].data.forEach((contribution: Contribution) => {
                     if (!obj.hasOwnProperty(contribution.co_date)) obj[contribution.co_date] = {};
                     obj[contribution.co_date][contribution.co_member] = contribution;
                 });
@@ -35,7 +38,11 @@ export default function Home() {
                 setContributions(obj);
             }
 
-            if (values[2].success) setFund(values[2].data);
+            if (values[1].success) setFund(values[1].data);
+
+            // users
+            if (user.me_role === 1 && values[2].success) setUsers(values[2].data);
+            else setUsers([user]);
         });
     }, []);
 
