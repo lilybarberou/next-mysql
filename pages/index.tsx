@@ -109,7 +109,7 @@ S.Years = styled.div`
         cursor: pointer;
         color: ${({ theme }) => theme.primary};
 
-        .active {
+        &.active {
             text-decoration: underline;
         }
     }
