@@ -11,9 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <RequireAuth>
             <ThemeProvider theme={globalTheme}>
                 <GlobalStyle />
-                <ToastContainer position="bottom-right" theme="dark" />
+                <ToastContainer position='bottom-right' theme='dark' />
                 <Head>
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <meta name='viewport' content='width=device-width, initial-scale=1' />
                 </Head>
                 <Navigation />
                 <Component {...pageProps} />
@@ -34,11 +34,6 @@ const GlobalStyle = createGlobalStyle<{ theme: { background: string; primary: st
         font-family: ${({ theme }) => theme.font};
         background: ${({ theme }) => theme.background};
         color: white;
-        min-height: 100vh;
-
-        #__next {
-            height: 100vh;
-        }
     }
 
     *::selection {

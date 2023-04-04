@@ -34,10 +34,10 @@ export default function Login() {
             <Head>
                 <title>Connexion</title>
             </Head>
-            <S.Form id="form" onSubmit={handleSubmit}>
+            <S.Form id='form' onSubmit={handleSubmit}>
                 <h1>Connexion</h1>
-                <Input type="email" placeholder="Email" name="email" required={true} autoComplete="off" />
-                <Input type="password" placeholder="Mot de passe" name="password" required={true} autoComplete="off" />
+                <Input type='email' placeholder='Email' name='email' required={true} autoComplete='off' />
+                <Input type='password' placeholder='Mot de passe' name='password' required={true} autoComplete='off' />
                 <Button>Connexion</Button>
             </S.Form>
         </S.Container>
@@ -46,7 +46,7 @@ export default function Login() {
 
 const S: any = {};
 S.Container = styled.div`
-    height: 100%;
+    height: 100vh;
     padding: 0 20px;
     display: flex;
 
