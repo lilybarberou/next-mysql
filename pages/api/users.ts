@@ -15,6 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       if (!req.body) return res.status(401).json({success: false, message: 'Aucune donnée passée'});
       if (req.body) {
         const body = JSON.parse(req.body);
+
+        const checkEmailSql = "SELECT me_id FROM members WHERE me_email = ? AND me_deleted = 0";
+        const checkEmail = await sqlQuery(checkEmailSql, [body.me_email]);
+        if (checkEmail.length > 0) return res.status(401).json({success: false, message: 'Cet email existe déjà'});
+
         if (body?.me_id) {
           whereFields.stmt += 'me_id = ?';
           whereFields.values.push(body.me_id);
