@@ -35,7 +35,7 @@ export default function Navigation() {
             {navLinks.map((link) => {
                 if (link.hasOwnProperty('cond') && !link.cond) return null;
                 return (
-                    <Link key={link.path} href={link.path}>
+                    <Link key={link.path} href={link.path} className={router.pathname === link.path ? 'active' : ''}>
                         {link.title}
                     </Link>
                 );
@@ -57,7 +57,8 @@ S.Container = styled.div`
     a {
         transition: 0.2s;
 
-        :hover {
+        :hover,
+        &.active {
             color: ${({ theme }) => theme.primary};
         }
     }
