@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     // UPDATE USER
     if (req.method === 'PUT') {
-      if (!req.body) res.status(401).json({success: false, message: 'Aucune donnée passée'});
+      if (!req.body) return res.status(401).json({success: false, message: 'Aucune donnée passée'});
       if (req.body) {
         const body = JSON.parse(req.body);
         if (body?.me_id) {
@@ -27,8 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.status(200).json({success: true, data: results});
     }
     else if (req.method === 'POST') {
-      if (!req.body) res.status(401).json({success: false, message: 'Aucune donnée passée'});
+      if (!req.body) return res.status(401).json({success: false, message: 'Aucune donnée passée'});
       const body = JSON.parse(req.body);
+
+      const checkEmailSql = "SELECT me_id FROM members WHERE me_email = ? AND me_deleted = 0";
+      const checkEmail = await sqlQuery(checkEmailSql, [body.me_email]);
+      if (checkEmail.length > 0) return res.status(401).json({success: false, message: 'Cet email existe déjà'});
 
       const hash = bcrypt.hashSync(body.me_password, saltRounds);
       body.me_password = hash;
@@ -55,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.status(200).json({success: true, data: results});
     }
     else if (req.method === 'DELETE') {
-      if (!req.body) res.status(401).json({success: false, message: 'Aucune donnée passée'});
+      if (!req.body) return res.status(401).json({success: false, message: 'Aucune donnée passée'});
       if (req.body) {
         const body = JSON.parse(req.body);
         if (body?.me_id) {
