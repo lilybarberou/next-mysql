@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     const data = JSON.parse(req.body);
     
-    const sql = `SELECT me_id, me_role, me_name, me_firstname, me_password FROM members WHERE me_email = ?`;
+    const sql = `SELECT me_id, me_role, me_name, me_firstname, me_password FROM members WHERE me_email = ? AND me_deleted = 0`;
     const result = await sqlQuery(sql, [data.email]);
 
     if (result.length === 0) {
