@@ -1,6 +1,7 @@
-import { PropsWithChildren, ReactNode, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { fetchApi } from '@lib/api';
 import { useRouter } from 'next/router';
+import Loader from './Loader';
 
 export default function RequireAuth(props: PropsWithChildren) {
     const { children } = props;
@@ -38,7 +39,7 @@ export default function RequireAuth(props: PropsWithChildren) {
     }, [router.pathname]);
 
     if (pageAllowed) return children;
-    if (loading) return <div>Chargement...</div>;
+    if (loading) return <Loader />;
     if (!authenticated) router.push('/connexion');
     return children;
 }
