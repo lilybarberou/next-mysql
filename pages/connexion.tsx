@@ -25,7 +25,7 @@ export default function Login() {
         if (query.success && query.access_token) {
             window.localStorage.setItem('access_token', query.access_token);
             window.localStorage.setItem('user', JSON.stringify(query.data));
-            router.push('/');
+            window.location.pathname = '/';
         } else toast(query.message, { type: 'error' });
     };
 
