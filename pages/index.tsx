@@ -3,8 +3,10 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { fetchApi } from '@lib/api';
 import { Contribution, User } from '@lib/types';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+    const router = useRouter();
     const [users, setUsers] = useState<User[]>([]);
     const [contributions, setContributions] = useState<any>({});
     const [fund, setFund] = useState(0);
@@ -14,36 +16,42 @@ export default function Home() {
     const months = ['Jan.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juill.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
 
     useEffect(() => {
-        let promisedArray = [fetchApi('contributions'), fetchApi('fund')];
-        const user = JSON.parse(localStorage.getItem('user') as string);
-        if (user.me_role === 1) promisedArray.push(fetchApi('users'));
+        const initPage = () => {
+            let promisedArray = [fetchApi('contributions'), fetchApi('fund')];
+            const localUser = localStorage.getItem('user');
+            if (!localUser) return router.push('/connexion');
+            const user = JSON.parse(localUser);
+            if (user.me_role === 1) promisedArray.push(fetchApi('users'));
 
-        Promise.all(promisedArray).then((values) => {
-            if (values[0].success) {
-                const obj: any = {};
+            Promise.all(promisedArray).then((values) => {
+                if (values[0].success) {
+                    const obj: any = {};
 
-                values[0].data.forEach((contribution: Contribution) => {
-                    if (!obj.hasOwnProperty(contribution.co_date)) obj[contribution.co_date] = {};
-                    obj[contribution.co_date][contribution.co_member] = contribution;
-                });
+                    values[0].data.forEach((contribution: Contribution) => {
+                        if (!obj.hasOwnProperty(contribution.co_date)) obj[contribution.co_date] = {};
+                        obj[contribution.co_date][contribution.co_member] = contribution;
+                    });
 
-                let list: number[] = [];
-                Object.keys(obj).forEach((key) => {
-                    const year = key.split('-')[0];
-                    if (!yearsList.includes(Number(year))) yearsList.push(Number(year));
-                });
-                list = yearsList.sort((a, b) => b - a);
-                setYearsList(list);
+                    let list: number[] = [];
+                    Object.keys(obj).forEach((key) => {
+                        const year = key.split('-')[0];
+                        if (!yearsList.includes(Number(year))) yearsList.push(Number(year));
+                    });
+                    list = yearsList.sort((a, b) => b - a);
+                    setYearsList(list);
 
-                setContributions(obj);
-            }
+                    setContributions(obj);
+                }
 
-            if (values[1].success) setFund(values[1].data);
+                if (values[1].success) setFund(values[1].data);
 
-            // users
-            if (user.me_role === 1 && values[2].success) setUsers(values[2].data);
-            else setUsers([user]);
-        });
+                // users
+                if (user.me_role === 1 && values[2].success) setUsers(values[2].data);
+                else setUsers([user]);
+            });
+        };
+
+        initPage();
     }, []);
 
     const changeYear = (year: number) => {
