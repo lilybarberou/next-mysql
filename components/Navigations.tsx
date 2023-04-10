@@ -11,7 +11,7 @@ export default function Navigation() {
     useEffect(() => {
         const member = window.localStorage.getItem('user');
         if (member && JSON.parse(member).me_role === 1) setIsAdmin(true);
-    }, []);
+    }, [router.pathname]);
 
     // declare navLinks
     const navLinks = [
