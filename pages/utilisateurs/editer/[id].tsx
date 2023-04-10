@@ -37,19 +37,19 @@ export default function EditerUtilisateur() {
             <Head>
                 <title>Editer un utilisateur</title>
             </Head>
-            <S.Form id="form" onSubmit={handleSubmit}>
+            <S.Form id='form' onSubmit={handleSubmit}>
                 <h1>Editer un utilisateur</h1>
-                <label htmlFor="name">Rôle</label>
-                <Select name="me_role" defaultValue={user.me_role}>
-                    <option value="1">Administrateur</option>
-                    <option value="2">Utilisateur</option>
+                <label htmlFor='name'>Rôle</label>
+                <Select name='me_role' defaultValue={user.me_role}>
+                    <option value='1'>Administrateur</option>
+                    <option value='2'>Utilisateur</option>
                 </Select>
-                <label htmlFor="email">Email</label>
-                <Input defaultValue={user.me_email} type="email" placeholder="Email" name="me_email" required={true} autoComplete="off" />
-                <label htmlFor="firstname">Prénom</label>
-                <Input defaultValue={user.me_firstname} placeholder="Prénom" name="me_firstname" required={true} autoComplete="off" />
-                <label htmlFor="name">Nom</label>
-                <Input defaultValue={user.me_name} placeholder="Nom" name="me_name" required={true} autoComplete="off" />
+                <label htmlFor='email'>Email</label>
+                <Input defaultValue={user.me_email} disabled={true} />
+                <label htmlFor='firstname'>Prénom</label>
+                <Input defaultValue={user.me_firstname} placeholder='Prénom' name='me_firstname' required={true} autoComplete='off' />
+                <label htmlFor='name'>Nom</label>
+                <Input defaultValue={user.me_name} placeholder='Nom' name='me_name' required={true} autoComplete='off' />
                 <Button>Modifier</Button>
             </S.Form>
         </S.Container>
